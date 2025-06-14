@@ -2,13 +2,27 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import { Header } from './components/Header'
+import { PlayerStatus } from './components/PlayerStatus'
+import { ActionButtons } from './components/ActionButtons'
+import { GameBoard } from './components/GameBoard'
+import { Container, Stack } from '@mantine/core'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [player, setPlayer] = useState<{
+    name: string;
+    score:number;
+    status:"waiting" | "playing" | "won" | "lost";
+  }>
+    ({
+    "name": "Player 1",
+    "score": 0,
+    "status": 'waiting' // waiting | playing | won | lost
+  })
 
   return (
     <>
-      <div>
+      {/* <div>
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
@@ -27,7 +41,15 @@ function App() {
       </div>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
-      </p>
+      </p> */}
+      <Container>
+        <Stack>
+          <Header />
+          <PlayerStatus name={player.name} score={player.score} status={player.status}/>
+          <GameBoard />
+          <ActionButtons />
+        </Stack>
+      </Container>
     </>
   )
 }
