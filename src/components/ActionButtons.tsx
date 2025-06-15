@@ -1,7 +1,19 @@
 // Gestion des boutons pour interragir 
+type ActionButtonsType={
+	// status: "waiting" | "playing" | "won" | "lost";
+	onWin: () => void;
+	onLost: () => void;
+}
 
-export function ActionButtons() {
+// export function ActionButtons(status: ActionButtonsType) {
+export function ActionButtons(props: ActionButtonsType) {
 	return (
-		<p>ActionButtons</p>
+		<div>
+			<p>ActionButtons</p>
+			{/* <h1>status : {props.status}</h1> */}
+			<button onClick={props.onWin}>Win</button>
+			<button onClick={props.onLost}>Lost</button>
+			{/* <button>Lost</button> */}
+		</div>
 	)
 }

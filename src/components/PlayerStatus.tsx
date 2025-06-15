@@ -5,12 +5,13 @@ type PlayerStatusProps= {
 	status: "waiting" | "playing" | "won" | "lost";
 }
 
-export function PlayerStatus({name, score, status}: PlayerStatusProps ) {
+// export function PlayerStatus({name, score, status}: PlayerStatusProps ) {
+export function PlayerStatus(props: PlayerStatusProps ) {
 	return (
 		<div>
-			<p>Player: {name}</p>
-			<p>Score: {score}</p>
-			<p>Status: {status}</p>
+			<p>Player: {props.name}</p>
+			<p>Score: {props.score}</p>
+			<p>Status: {props.status}</p>
 		</div>
 	)
 }
