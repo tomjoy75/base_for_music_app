@@ -1,25 +1,28 @@
 // Zone principale du jeu
 
-import { useState, useEffect } from "react"
+//import { useState, useEffect } from "react"
+type GameBoardTypes={
+	msg: string;
+}
 
-export function GameBoard() {
+export function GameBoard(props: GameBoardTypes) {
 	// let response: any;
-	const [msg, setMsg] = useState("");
+	// const [msg, setMsg] = useState("");
 
-	useEffect(() => {
-		async function startFetching() {
-			const res = await fetch('https://api.adviceslip.com/advice', {method: 'GET', cache: 'no-cache'});
-			const json = await res.json();
-			setMsg(json.slip.advice);		
-			console.log(msg);
-		}
-		startFetching();
-	}, []);
+	// useEffect(() => {
+	// 	async function startFetching() {
+	// 		const res = await fetch('https://api.adviceslip.com/advice', {method: 'GET', cache: 'no-cache'});
+	// 		const json = await res.json();
+	// 		setMsg(json.slip.advice);		
+	// 		console.log(msg);
+	// 	}
+	// 	startFetching();
+	// }, []);
 
 	return (
 		<>
 			<p>GameBoard</p>
-			<p>{msg}</p>
+			<p>{props.msg}</p>
 		</>
 	)
 }

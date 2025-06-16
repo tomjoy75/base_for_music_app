@@ -20,6 +20,13 @@ function App() {
     "status": 'waiting' // waiting | playing | won | lost
   });
 
+  // const [game, setGame] = useState({
+  //   "message": ""
+  // })
+
+	const [msg, setMsg] = useState("");
+
+
   function handleWin(){
     setPlayer({
       ...player, 
@@ -35,14 +42,29 @@ function App() {
     });
    }
 
+   function handlePlay(){
+		async function startFetching() {
+			const res = await fetch('https://api.adviceslip.com/advice', {method: 'GET', cache: 'no-cache'});
+			const json = await res.json();
+			setMsg(json.slip.advice);		
+			console.log(msg);
+      setPlayer({
+        ...player,
+        status: "playing"
+      })
+		}
+		startFetching();
+   }
+
   return (
     <>
       <Container>
         <Stack>
           <Header />
           <PlayerStatus name={player.name} score={player.score} status={player.status}/>
-          <GameBoard />
-          <ActionButtons onWin={handleWin} onLost={handleLost}/>
+          <GameBoard msg={msg}/>
+          <ActionButtons onWin={handleWin} onLost={handleLost} onStart={handlePlay}/>
+           
         </Stack>
       </Container>
     </>
