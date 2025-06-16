@@ -7,6 +7,7 @@ import { PlayerStatus } from './components/PlayerStatus'
 import { ActionButtons } from './components/ActionButtons'
 import { GameBoard } from './components/GameBoard'
 import { Container, Stack } from '@mantine/core'
+import fakeAdvices from './data/fake-advices.json'
 
 function App() {
   const [player, setPlayer] = useState<{
@@ -26,7 +27,6 @@ function App() {
 
 	const [msg, setMsg] = useState("");
 
-
   function handleWin(){
     setPlayer({
       ...player, 
@@ -44,6 +44,7 @@ function App() {
 
    function handlePlay(){
 		async function startFetching() {
+      startRound();
 			const res = await fetch('https://api.adviceslip.com/advice', {method: 'GET', cache: 'no-cache'});
 			const json = await res.json();
 			setMsg(json.slip.advice);		
@@ -54,6 +55,17 @@ function App() {
       })
 		}
 		startFetching();
+   }
+
+   function getRandomInt(max: number){
+    return Math.floor(Math.random() * max);
+   }
+  
+   function startRound(){
+    if (getRandomInt(2))
+      console.log("Good advice");
+    else
+      console.log("Bad advice");
    }
 
   return (
