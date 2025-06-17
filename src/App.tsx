@@ -32,25 +32,28 @@ function App() {
     isRealAdvice: boolean;
   }>
   ({
-    "message": "",
+    "message": "Click on start to begin",
     "isRealAdvice": false
   });
 
   useEffect(() => {
     if (player.score >= 20) {
       setMsg({ ...msg, message: "You Win!"});
-      setPlayer({...player,
-        isPlaying: false
-      })
+      setPlayer({...player, isPlaying:false
+      });
     } else if (player.score <= 0) {
       setMsg({...msg, message:" You lost!"});
-      setPlayer({...player,
-        isPlaying: false
+      setPlayer({...player, isPlaying:false
       })
     } else {
-      startRound();
+      if (player.isPlaying === true)
+       startRound();
     }
   }, [player.score]);
+
+  function delay(ms:number){
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
 
   function handleWin(){
     setPlayer({
@@ -82,7 +85,20 @@ function App() {
 	// 	startFetching();
   //  }
    
-  function handleAnswer(isTrue:boolean){
+  async function handleAnswer(isTrue:boolean){
+    setPlayer({
+      ...player,
+      isPlaying: false
+    })
+    if(msg.isRealAdvice)
+      setMsg({...msg, message:"This was a correct message"});
+    else
+      setMsg({...msg, message:"This message was not correct"});
+    await delay(1000);
+    setPlayer({
+      ...player,
+      isPlaying: true
+    })
     if (isTrue === msg.isRealAdvice){
       handleWin();
     }
