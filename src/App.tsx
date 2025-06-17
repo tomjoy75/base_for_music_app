@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -34,6 +34,16 @@ function App() {
     "isRealAdvice": false
   });
 
+  useEffect(() => {
+    if (player.score >= 20) {
+      setMsg({ ...msg, message: "You Win!"});
+    } else if (player.score <= 0) {
+      setMsg({...msg, message:" You lost!"});
+    } else {
+      startRound();
+    }
+  }, [player.score]);
+
   function handleWin(){
     setPlayer({
       ...player, 
@@ -64,13 +74,34 @@ function App() {
 	// 	startFetching();
   //  }
    
-  //  function handleAnswer(isTrue:boolean){
+  function handleAnswer(isTrue:boolean){
+    if (isTrue === msg.isRealAdvice){
+      handleWin();
+    }
+    else {
+      handleLost();
+    }
+    // if (player.score >= 20){
+    //   setMsg({
+    //     ...msg,
+    //     message: "You Win!"
+    //   })
+    // }
+    // else if (player.score <=0 ){
+    //   setMsg({
+    //     ...msg,
+    //     message: "You Lost!"
+    //   })
 
-  //  }
+    // }
+    // else {
+    //   startRound();
+    // }
+  }
 
-   function getRandomInt(max: number){
-    return Math.floor(Math.random() * max);
-   }
+  function getRandomInt(max: number){
+  return Math.floor(Math.random() * max);
+  }
   
   async function startFetching() {
     // startRound();
@@ -78,10 +109,10 @@ function App() {
     const json = await res.json();
     setMsg({message: json.slip.advice, isRealAdvice:true});		
     console.log(msg);
-    setPlayer({
-      ...player,
-      status: "playing"
-    })
+    // setPlayer({
+    //   ...player,
+    //   status: "playing"
+    // })
   }
 
   function randBadAdvice(){
@@ -90,10 +121,10 @@ function App() {
       if (+row.id === num)
         setMsg({message: row.advice, isRealAdvice:false});
     }
-    setPlayer({
-      ...player,
-      status: "playing"
-    })
+    // setPlayer({
+    //   ...player,
+    //   status: "playing"
+    // })
   }
 
   function startRound(){
@@ -104,6 +135,15 @@ function App() {
       randBadAdvice();
   }
 
+  function handleStart(){
+    setPlayer({
+      ...player,
+      score: 10,
+      status: "playing"
+    })
+    startRound();
+  }
+
   return (
     <>
       <Container>
@@ -111,7 +151,7 @@ function App() {
           <Header />
           <PlayerStatus name={player.name} score={player.score} status={player.status}/>
           <GameBoard msg={msg.message}/>
-          <ActionButtons onWin={handleWin} onLost={handleLost} onStart={startRound}/>
+          <ActionButtons onKeyPressed={handleAnswer} onStart={handleStart}/>
            
         </Stack>
       </Container>

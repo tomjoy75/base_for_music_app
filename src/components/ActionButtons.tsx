@@ -1,8 +1,9 @@
 // Gestion des boutons pour interragir 
 type ActionButtonsType={
 	// status: "waiting" | "playing" | "won" | "lost";
-	onWin: () => void;
-	onLost: () => void;
+	// onWin: () => void;
+	onKeyPressed: (value: boolean) => void;
+	// onLost: () => void;
 	onStart: () => void;
 }
 
@@ -12,8 +13,8 @@ export function ActionButtons(props: ActionButtonsType) {
 		<div>
 			<p>ActionButtons</p>
 			{/* <h1>status : {props.status}</h1> */}
-			<button onClick={props.onWin}>Win</button>
-			<button onClick={props.onLost}>Lost</button>
+			<button onClick={()=>props.onKeyPressed(true)}>True</button>
+			<button onClick={()=>props.onKeyPressed(false)}>False</button>
 			<button onClick={props.onStart}>Start</button>
 			{/* <button>Lost</button> */}
 		</div>
