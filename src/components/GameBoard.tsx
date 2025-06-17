@@ -1,6 +1,9 @@
 // Zone principale du jeu
-
+import { Paper, Text } from "@mantine/core"
+import '@mantine/core/styles/Paper.css';
 //import { useState, useEffect } from "react"
+
+
 type GameBoardTypes={
 	msg: string;
 }
@@ -20,10 +23,10 @@ export function GameBoard(props: GameBoardTypes) {
 	// }, []);
 
 	return (
-		<>
-			<p>GameBoard</p>
-			<p>{props.msg}</p>
-		</>
+		<Paper shadow="xs" mt="sm" p="md" radius="md" withBorder>
+			{/* <p>GameBoard</p> */}
+			<Text ta="center" size="lg" fw={500}>{props.msg}</Text>
+		</Paper>
 	)
 }
 

@@ -6,8 +6,9 @@ import { Header } from './components/Header'
 import { PlayerStatus } from './components/PlayerStatus'
 import { ActionButtons } from './components/ActionButtons'
 import { GameBoard } from './components/GameBoard'
-import { Container, Stack } from '@mantine/core'
+import { Container, Paper, Stack } from '@mantine/core'
 import fakeAdvices from './data/fake-advices.json'
+import { motion } from 'framer-motion'
 
 function App() {
   const [player, setPlayer] = useState<{
@@ -171,14 +172,18 @@ function App() {
 
   return (
     <>
-      <Container>
-        <Stack>
-          <Header />
-          <PlayerStatus name={player.name} score={player.score} status={player.status}/>
-          <GameBoard msg={msg.message}/>
-          <ActionButtons onKeyPressed={handleAnswer} onStart={handleStart} isPlaying={player.isPlaying}/>
-           
-        </Stack>
+      <Container size="xs">
+        <Paper bg="dark.6" shadow="md" radius="md" p="xl" withBorder> 
+          <Stack gap="md">
+            <Header />
+            <PlayerStatus name={player.name} score={player.score} status={player.status}/>
+            <motion.div key={msg.message} initial={{opacity:0, y: 0}} animate={{opacity:1, y: 0}} transition={{duration:0.4}}>
+              <GameBoard msg={msg.message}/>
+            </motion.div>
+            <ActionButtons onKeyPressed={handleAnswer} onStart={handleStart} isPlaying={player.isPlaying}/>
+          </Stack>
+        </Paper>
+
       </Container>
     </>
   )

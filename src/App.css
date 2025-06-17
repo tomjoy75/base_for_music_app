@@ -40,3 +40,13 @@
 .read-the-docs {
   color: #888;
 }
+
+:root[data-mantine-color-scheme="light"] body {
+  background-color: var(--mantine-color-gray-0)!important;
+}
+
+:root[data-mantine-color-scheme="dark"] body {
+  background-color: var(--mantine-color-dark-8)!important;
+}
+
+
