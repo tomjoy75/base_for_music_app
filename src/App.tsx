@@ -14,11 +14,13 @@ function App() {
     name: string;
     score:number;
     status:"waiting" | "playing" | "won" | "lost";
+    isPlaying:boolean;
     }>
     ({
     "name": "Player 1",
     "score": 10,
-    "status": 'waiting' // waiting | playing | won | lost
+    "status": 'waiting', // waiting | playing | won | lost
+    isPlaying:false
   });
 
   // const [game, setGame] = useState({
@@ -37,8 +39,14 @@ function App() {
   useEffect(() => {
     if (player.score >= 20) {
       setMsg({ ...msg, message: "You Win!"});
+      setPlayer({...player,
+        isPlaying: false
+      })
     } else if (player.score <= 0) {
       setMsg({...msg, message:" You lost!"});
+      setPlayer({...player,
+        isPlaying: false
+      })
     } else {
       startRound();
     }
@@ -139,7 +147,8 @@ function App() {
     setPlayer({
       ...player,
       score: 10,
-      status: "playing"
+      status: "playing",
+      isPlaying: true
     })
     startRound();
   }
@@ -151,7 +160,7 @@ function App() {
           <Header />
           <PlayerStatus name={player.name} score={player.score} status={player.status}/>
           <GameBoard msg={msg.message}/>
-          <ActionButtons onKeyPressed={handleAnswer} onStart={handleStart}/>
+          <ActionButtons onKeyPressed={handleAnswer} onStart={handleStart} isPlaying={player.isPlaying}/>
            
         </Stack>
       </Container>
